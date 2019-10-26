@@ -22,7 +22,7 @@ All API calls for create (POST) or edit (PUT/POST) , are required to.
 
 To ensure requests are not modified in transit, it is needed to calculate a HMAC on the request.
 
-1. Sort all fields in the request object recursively and serialize as a UTF-8 string.
+1. Sort all fields in the request object recursively by lexicographical order of the keys and serialize as a UTF-8 string.
 Example library: https://www.npmjs.com/package/json-stable-stringify 
 2. Use request string above and public key as inputs to HMAC. The output should be encoded as a Base64 string.
 3. Put raw request, public key and hmac output (signature) into the final request object as specified below. 
