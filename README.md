@@ -1,4 +1,4 @@
-# Open Meetup Spec
+# Open Meetup Registry
 
 > Note this is a working title - this WILL get renamed accordingly to the final name
 
