@@ -1,6 +1,6 @@
 # Organiser API
 
-The following is the draft spec for the API's used by "organiser servers" to sync data to a "public registry".
+The following is the draft spec for the API's used by "providers" to sync data to the "registry".
 
 All endpoints are prefixed with `/v1/organiser/` 
 
@@ -18,7 +18,17 @@ All API calls for create (POST) or edit (PUT/POST) , are required to.
 
 > Note that edit is intentionally configured to support POST, to make this easier for any developer to build on, without following REST strictly.
 
-**Sample Parameters**
+### Signing procedure:
+
+To ensure requests are not modified in transit, it is needed to calculate a HMAC on the request.
+
+1. Sort all fields in the request object recursively and serialize as a UTF-8 string.
+Example library: https://www.npmjs.com/package/json-stable-stringify 
+2. Use request string above and public key as inputs to HMAC. The output should be encoded as a Base64 string.
+3. Put raw request, public key and hmac output (signature) into the final request object as specified below. 
+
+
+**Request Format**
 ```
 {
 	"request" : {
