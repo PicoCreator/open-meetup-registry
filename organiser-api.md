@@ -4,6 +4,44 @@ The following is the draft spec for the API's used by "organiser servers" to syn
 
 All endpoints are prefixed with `/v1/organiser/` 
 
+---
+
+## API Preamble
+
+### POST-ing / editing API data
+
+All API calls for create (POST) or edit (PUT/POST) , are required to.
+
+- be submitted with a "request" object
+- be authenticated with a public key with signature
+- be submitted as JSON request with `content-type: application/json`
+
+> Note that edit is intentionally configured to support POST, to make this easier for any developer to build on, without following REST strictly.
+
+**Sample Parameters**
+```
+{
+	"request" : {
+		...
+	},
+	"publickey" : "...",
+	"hmac" : "..."
+}
+```
+
+### Object Status
+
+All providers, groups, and events objects - go through the following registration status
+
+- NOT_REGISTERED
+- PENDING_APPROVAL
+- PROVISIONAL
+- REGISTERED
+- BLOCKED
+
+It is not required for the registry to implement all status code
+
+---
 
 ## Architecture
 ![architecture diagram](imgs/Architecture.png)
@@ -11,9 +49,9 @@ All endpoints are prefixed with `/v1/organiser/`
 
 ## General Purpose API
 
-### /organiser/api-version
+### /api-version
 
-Returns the current API version. This 
+Returns the current API version. This should be checked by implementing clients for any incomptiblity changes
 
 **type:** GET request
 
@@ -24,19 +62,29 @@ Returns the current API version. This
 
 ## Provider API
 
-### /organiser/provider/:serverID/set
+### /provider/:serverID/create
 
 Add or registry an organiser provider.
 
 **type:** POST request
 
-**Parameters:**
-+ ProviderID 
-+ PublicURL 
+**Request Object Parameters:**
+| Parameter Name | Type   | Description                                          |
+|----------------|--------|------------------------------------------------------|
+| serverID       | String | Base 58 - GUID string to identify the server         |
+| niceName       | String | Nice server name string (for administration purpose) |
+| publicURL      | String | URL of the public server                             |
+| publicKey      | String | Public key used to identify the server               |
 
 **Sample response**
 
-### /organiser/provider/:serverID/get
+
+
+```
+{ "result": true }
+```
+
+### /organiser/provider/:serverID/update
 
 ### /organiser/provider/:serverID/changeKey
 
