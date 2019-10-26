@@ -9,3 +9,11 @@ node_modules
 
 # Private notes folder (for developers)
 private
+
+# Hide secure configs
+config/secure/*.js
+config/secure/*.json
+
+# Unhide sample configs
+!config/secure/*.sample.js
+!config/secure/*.sample.json
