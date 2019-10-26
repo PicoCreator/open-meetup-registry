@@ -1,4 +1,11 @@
+# Common hiddnen files
+.*
 
+# Excluding gitignore
+!.gitignore
 
-# node_modules
+# node_module depencies
 node_modules
+
+# Private notes folder (for developers)
+private
