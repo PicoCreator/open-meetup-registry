@@ -10,3 +10,14 @@ so yea ...
 ## User stories??
 
 See: https://github.com/freeCodeCamp/chapter
+
+
+## Dumb twitter notes
+
+See this whole thread for back of the twitter.
+
+https://twitter.com/bguiz/status/1185025876515160064
+
+## List of meetup organiser
+
+https://github.com/PicoCreator/list-of-meetup-alternatives
