@@ -38,7 +38,7 @@ Example library: https://www.npmjs.com/package/json-stable-stringify
 }
 ```
 
-### Provider Object Details
+### Provider Request Object Details
 
 | Parameter Name | Type           | Description                                                    | Length limits   |
 |----------------|----------------|----------------------------------------------------------------|-----------------|
@@ -47,7 +47,7 @@ Example library: https://www.npmjs.com/package/json-stable-stringify
 | publicURL      | String (UTF-8) | URL of the public server                                       | 2048 bytes      |
 | publicKey      | String (UTF-8) | Public key used to identify the server, Base64 encoded         | 1024 bytes      |
 
-### Group Object Details
+### Group Request Object Details
 
 | Parameter Name | Type           | Description                                                    | Length limits   |
 |----------------|----------------|----------------------------------------------------------------|-----------------|
@@ -58,7 +58,7 @@ Example library: https://www.npmjs.com/package/json-stable-stringify
 | publicKey      | String (UTF-8) | Public key used to identify the server, Base64 encoded         | 1024 bytes      |
 | countryCode    | String (UTF-8) | ISO 3166-2 country code format (XX-YYZ)                        | 6 bytes         |
 
-### Event Object Details
+### Event Request Object Details
 
 | Parameter Name   | Required | Type           | Description                                                | Length Limits |
 |------------------|----------|----------------|------------------------------------------------------------|---------------|
@@ -73,7 +73,7 @@ Example library: https://www.npmjs.com/package/json-stable-stringify
 | address          | yes      | String (UTF-8) | Address for event                                          | 140 bytes     |
 | thumbnail        | optional | String (UTF-8) | URL for the thumbnail image                                | 2048 bytes    |
 
-### Public Key update details
+### Change Public Key Update Details
 
 | Parameter Name | Type           | Description                                                    | Length limits   |
 |----------------|----------------|----------------------------------------------------------------|-----------------|
@@ -85,13 +85,20 @@ All providers, groups, and events objects - go through the following registratio
 
 | Object Status    | Description                                                                                   |
 |------------------|-----------------------------------------------------------------------------------------------|
-| NOT_REGISTERED   | Reserved keyword                                                                              |
+| NOT_REGISTERED   | Used to indicate that the object is not registered (used as an error)                         |
 | PENDING_APPROVAL | Reserved keyword - used to indicate it is registered, and pending an approval process         |
 | PROVISIONAL      | Reserved keyword - used to indicate it is registered, and may or may not be visible to public |
 | REGISTERED       | Indicate that the object is registered and visible to public                                  |
 | BLOCKED          | Indicate that the object is blocked                                                           |
 
 It is not required for the registry to implement all status code.
+
+### Error Status
+
+| Object Status    | Description                                                                                   |
+|------------------|-----------------------------------------------------------------------------------------------|
+| DUPLICATE_ID     | Duplicate ID found, please ensure your GUID is truely random                                  |
+| INVALID_KEY      | Invalid key used to modify object                                                             |
 
 ---
 
@@ -108,6 +115,7 @@ Returns the current API version. This should be checked by implementing clients 
 **type:** GET request
 
 **Sample Response**
+
 ```
 { "api-version" : "1.0.0" }
 ```
@@ -118,16 +126,9 @@ Returns the current API version. This should be checked by implementing clients 
 
 Add or register a provider.
 
-**type:** POST request
+**Type:** POST request
 
-**Request Object Parameters:**
-
-| Parameter Name | Type           | Description                                                    | Length limits   |
-|----------------|----------------|----------------------------------------------------------------|-----------------|
-| providerID     | String (UTF-8) | Base 58 - GUID string to identify the provider                 | 100 bytes       |
-| niceName       | String (UTF-8) | Nice server name string (for administrative purposes)          | 100 bytes       |
-| publicURL      | String (UTF-8) | URL of the public server                                       | 2048 bytes      |
-| publicKey      | String (UTF-8) | Public key used to identify the server, Base64 encoded         | 1024 bytes      |
+**Request Object Parameters:** see `Provider Request Object Details`
 
 **Sample request**
 ```
@@ -160,6 +161,14 @@ If providerID already exists in the registry:
 
 ### /provider/:providerID/update
 
+Edit a provider.
+
+**type:** PUT/POST request
+
+**Authenticate:** using provider public key
+
+**Request Object Parameters:** see `Provider Request Object Details`
+
 **Sample request**
 ```
 {
@@ -171,12 +180,15 @@ If providerID already exists in the registry:
 ```
 
 **Sample response**
+
 If updated successfully:
+
 ```
 { "result": true }
 ```
 
 If providerID doesn't exist:
+
 ```
 {
 	"error": {
@@ -187,16 +199,23 @@ If providerID doesn't exist:
 ```
 
 If public key does not match providerID:
+
 ```
 {
 	"error": {
-		"code" : "NOT_REGISTERED",
+		"code" : "INVALID_KEY",
 		"message" : "Public key does not match key registered with this providerID"
 	}
 }
 ```
 
 ### /provider/:providerID/changeKey
+
+Update the provider key
+
+**Authenticate:** using provider existing public key
+
+**Request Object Parameters:** see `Change Public Key Update Details`
 
 The request is validated with the `publicKey` and the `signature` in the surrounding request object. The `newPublicKey` is then set as the key associated with this `providerID`
 
@@ -212,12 +231,15 @@ The request is validated with the `publicKey` and the `signature` in the surroun
 ```
 
 **Sample response**
+
 If updated successfully:
+
 ```
 { "result": true }
 ```
 
 If providerID doesn't exist:
+
 ```
 {
 	"error": {
@@ -228,16 +250,16 @@ If providerID doesn't exist:
 ```
 
 If public key does not match providerID:
+
 ```
 {
 	"error": {
-		"code" : "NOT_REGISTERED",
+		"code" : "INVALID_KEY",
 		"message" : "Public key does not match key registered with this providerID"
 	}
 }
 ```
 
-## /group/:groupID/set
 
 ## /organiser/group/:groupID/get
 
