@@ -76,7 +76,7 @@ Returns the current API version. This should be checked by implementing clients 
 
 ### /provider/:serverID/create
 
-Add or registry an organiser provider.
+Add or register a provider.
 
 **type:** POST request
 
@@ -85,19 +85,19 @@ Add or registry an organiser provider.
 | Parameter Name | Type   | Description                                          |
 |----------------|--------|------------------------------------------------------|
 | serverID       | String | Base 58 - GUID string to identify the server         |
-| niceName       | String | Nice server name string (for administration purpose) |
+| niceName       | String | Nice server name string (for administrative purposes)|
 | publicURL      | String | URL of the public server                             |
 | publicKey      | String | Public key used to identify the server               |
 
 **Sample response**
 
-If registered succesfully.
+If registered succesfully:
 
 ```
 { "result": true }
 ```
 
-If a collision error occur
+If serverID already exists in the registry:
 
 ```
 { 
