@@ -45,6 +45,10 @@ It is not required for the registry to implement all status code
 
 ---
 
+## Architecture
+![architecture diagram](imgs/Architecture.png)
+
+
 ## General Purpose API
 
 ### /api-version
@@ -108,3 +112,16 @@ If a collision error occur
 ## /organiser/event/:eventID/get
 
 
+## Glossary
+
+### Provider
+Platform on which organisers create, edit and collect RSVPs for their meetups.
+
+### Registry
+Federated listing of all meetups across multiple providers.
+
+### Organiser
+Users of the meetup providers. They create the meetup on the provider platform and manage speakers and participants.
+
+### Participant
+Users of the registry who want to discover meetups.
