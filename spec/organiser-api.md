@@ -22,11 +22,10 @@ All API calls for create (POST) or edit (PUT/POST) , are required to.
 
 To ensure requests are not modified in transit, it is needed to calculate a HMAC on the request.
 
-1. Sort all fields in the request object recursively by lexicographical order of the keys and serialize as a UTF-8 string.
+1. Sort all fields in the request object recursively by lexicographical order of the keys and serialize as a String (UTF-8).
 Example library: https://www.npmjs.com/package/json-stable-stringify 
 2. Use request string above and public key as inputs to HMAC. The output should be encoded as a Base64 string.
 3. Put raw request, public key and hmac output (signature) into the final request object as specified below. 
-
 
 **Request Format**
 ```
@@ -38,6 +37,47 @@ Example library: https://www.npmjs.com/package/json-stable-stringify
 	"signature" : "..."
 }
 ```
+
+### Provider Object Details
+
+| Parameter Name | Type           | Description                                                    | Length limits   |
+|----------------|----------------|----------------------------------------------------------------|-----------------|
+| providerID     | String (UTF-8) | Base 58 - GUID string to identify the provider                 | 32 bytes        |
+| niceName       | String (UTF-8) | Nice server name string (for administrative purposes)          | 100 bytes       |
+| publicURL      | String (UTF-8) | URL of the public server                                       | 2048 bytes      |
+| publicKey      | String (UTF-8) | Public key used to identify the server, Base64 encoded         | 1024 bytes      |
+
+### Group Object Details
+
+| Parameter Name | Type           | Description                                                    | Length limits   |
+|----------------|----------------|----------------------------------------------------------------|-----------------|
+| groupID        | String (UTF-8) | Base 58 - GUID string to identify the group                    | 32 bytes        |
+| providerID     | String (UTF-8) | Base 58 - GUID string to identify the provider                 | 32 bytes        |
+| niceName       | String (UTF-8) | Nice server name string (for administrative purposes)          | 100 bytes       |
+| publicURL      | String (UTF-8) | URL of the public server                                       | 2048 bytes      |
+| publicKey      | String (UTF-8) | Public key used to identify the server, Base64 encoded         | 1024 bytes      |
+| countryCode    | String (UTF-8) | ISO 3166-2 country code format (XX-YYZ)                        | 6 bytes         |
+
+### Event Object Details
+
+| Parameter Name   | Required | Type           | Description                                                | Length Limits |
+|------------------|----------|----------------|------------------------------------------------------------|---------------|
+| eventID          | yes      | String (UTF-8) | Base 58 - GUID string to identify the event                | 32 bytes      |
+| groupID          | yes      | String (UTF-8) | Base 58 - GUID string to identify the group                | 32 bytes      |
+| title            | yes      | String (UTF-8) | Event title                                                | 40 bytes      |
+| shortDescription | yes      | String (UTF-8) | Short event description                                    | 140 bytes     |
+| startTime        | yes      | String (UTF-8) | Event start time (ISO 8601 Extended Format with Timezone)  | 30 bytes      |
+| endTime          | yes      | String (UTF-8) | Event ending time (ISO 8601 Extended Format with Timezone) | 30 bytes      |
+| publicURL        | yes      | String (UTF-8) | Full link to the event details (including RSVP)            | 2048 bytes    |
+| countryCode      | yes      | String (UTF-8) | ISO 3166-2 country code format (XX-YYZ)                    | 6 bytes       |
+| address          | yes      | String (UTF-8) | Address for event                                          | 140 bytes     |
+| thumbnail        | optional | String (UTF-8) | URL for the thumbnail image                                | 2048 bytes    |
+
+### Public Key update details
+
+| Parameter Name | Type           | Description                                                    | Length limits   |
+|----------------|----------------|----------------------------------------------------------------|-----------------|
+| newPublicKey   | String (UTF-8) | New public key, used for `changeKey` operation, Base64 encoded | 1024 bytes      |
 
 ### Object Status
 
@@ -51,7 +91,7 @@ All providers, groups, and events objects - go through the following registratio
 | REGISTERED       | Indicate that the object is registered and visible to public                                  |
 | BLOCKED          | Indicate that the object is blocked                                                           |
 
-It is not required for the registry to implement all status code
+It is not required for the registry to implement all status code.
 
 ---
 
@@ -74,7 +114,7 @@ Returns the current API version. This should be checked by implementing clients 
 
 ## Provider API
 
-### /provider/:serverID/create
+### /provider/:providerID/create
 
 Add or register a provider.
 
@@ -82,18 +122,17 @@ Add or register a provider.
 
 **Request Object Parameters:**
 
-| Parameter Name | Type         | Description                                                    | Length limits   |
-|----------------|--------------|----------------------------------------------------------------|-----------------|
-| serverID       | UTF-8 String | Base 58 - GUID string to identify the server                   | 100 characters  |
-| niceName       | UTF-8 String | Nice server name string (for administrative purposes)          | 100 characters  |
-| publicURL      | UTF-8String  | URL of the public server                                       | 2048 characters |
-| publicKey      | UTF-8 String | Public key used to identify the server, Base64 encoded         | 1024 characters |
-| newPublicKey   | UTF-8 String | New public key, used for `changeKey` operation, Base64 encoded | 1024 characters |
+| Parameter Name | Type           | Description                                                    | Length limits   |
+|----------------|----------------|----------------------------------------------------------------|-----------------|
+| providerID     | String (UTF-8) | Base 58 - GUID string to identify the provider                 | 100 bytes       |
+| niceName       | String (UTF-8) | Nice server name string (for administrative purposes)          | 100 bytes       |
+| publicURL      | String (UTF-8) | URL of the public server                                       | 2048 bytes      |
+| publicKey      | String (UTF-8) | Public key used to identify the server, Base64 encoded         | 1024 bytes      |
 
 **Sample request**
 ```
 {
-	"serverID": "Wgx98Rbi8nQuL9ddn3mTk1",
+	"providerID": "Wgx98Rbi8nQuL9ddn3mTk1",
 	"niceName": "Friendly Meetups",
 	"publicURL": "https://friendlymeetups.com",
 	"publicKey": "AAAAB3NzaC1yc2EAAAADAQABAAABAQCZqlC6FR3N2owDm0XEppLkSEQW2raVhoIOnFtDmiql+guZFoDZjHb77vpGKSQFhbGzqMlb1i0G90b6dHUKPVd+VU9aLKabHW0l2LnDuCfryrgpBq2b7cT73EVGU2AbBuDsGvXolTi61GRrb5/hU98+euYAre5dVAP5fa+IV55dvJ65FMjWFqL5sf1ZnHujil+Fh7g+j3G6nlj+QyGcLeCddJJFNsmszLK5EqzVPT27T2isYdRPDF5HiLgmR1hCFXAtwXxLDkcJoIXeTxBm43wwF6h/gATgKbEabB/bpOa5Y/uUGbmBvQWnTWAh4FRqORCFwCc+YC0Kk9ekoGlsY50Z"
@@ -108,23 +147,23 @@ If registered succesfully:
 { "result": true }
 ```
 
-If serverID already exists in the registry:
+If providerID already exists in the registry:
 
 ```
 { 
 	"error": {
 		"code" : "DUPLICATE_ID",
-		"message" : "Existing serverID found"
+		"message" : "Existing providerID found"
 	} 
 }
 ```
 
-### /provider/:serverID/update
+### /provider/:providerID/update
 
 **Sample request**
 ```
 {
-	"serverID": "Wgx98Rbi8nQuL9ddn3mTk1",
+	"providerID": "Wgx98Rbi8nQuL9ddn3mTk1",
 	"niceName": "UnFriendly Meetups",
 	"publicURL": "https://friendlymeetups.com",
 	"publicKey": "AAAAB3NzaC1yc2EAAAADAQABAAABAQCZqlC6FR3N2owDm0XEppLkSEQW2raVhoIOnFtDmiql+guZFoDZjHb77vpGKSQFhbGzqMlb1i0G90b6dHUKPVd+VU9aLKabHW0l2LnDuCfryrgpBq2b7cT73EVGU2AbBuDsGvXolTi61GRrb5/hU98+euYAre5dVAP5fa+IV55dvJ65FMjWFqL5sf1ZnHujil+Fh7g+j3G6nlj+QyGcLeCddJJFNsmszLK5EqzVPT27T2isYdRPDF5HiLgmR1hCFXAtwXxLDkcJoIXeTxBm43wwF6h/gATgKbEabB/bpOa5Y/uUGbmBvQWnTWAh4FRqORCFwCc+YC0Kk9ekoGlsY50Z"
@@ -137,34 +176,34 @@ If updated successfully:
 { "result": true }
 ```
 
-If serverID doesn't exist:
+If providerID doesn't exist:
 ```
 {
 	"error": {
 		"code" : "NOT_REGISTERED",
-		"message" : "serverID not found"
+		"message" : "providerID not found"
 	}
 }
 ```
 
-If public key does not match serverID:
+If public key does not match providerID:
 ```
 {
 	"error": {
 		"code" : "NOT_REGISTERED",
-		"message" : "Public key does not match key registered with this serverID"
+		"message" : "Public key does not match key registered with this providerID"
 	}
 }
 ```
 
-### /provider/:serverID/changeKey
+### /provider/:providerID/changeKey
 
-The request is validated with the `publicKey` and the `signature` in the surrounding request object. The `newPublicKey` is then set as the key associated with this `serverId`
+The request is validated with the `publicKey` and the `signature` in the surrounding request object. The `newPublicKey` is then set as the key associated with this `providerID`
 
 **Sample request**
 ```
 {
-	"serverID": "Wgx98Rbi8nQuL9ddn3mTk1",
+	"providerID": "Wgx98Rbi8nQuL9ddn3mTk1",
 	"niceName": "Friendly Meetups",
 	"publicURL": "https://friendlymeetups.com",
 	"publicKey": "AAAAB3NzaC1yc2EAAAADAQABAAABAQCZqlC6FR3N2owDm0XEppLkSEQW2raVhoIOnFtDmiql+guZFoDZjHb77vpGKSQFhbGzqMlb1i0G90b6dHUKPVd+VU9aLKabHW0l2LnDuCfryrgpBq2b7cT73EVGU2AbBuDsGvXolTi61GRrb5/hU98+euYAre5dVAP5fa+IV55dvJ65FMjWFqL5sf1ZnHujil+Fh7g+j3G6nlj+QyGcLeCddJJFNsmszLK5EqzVPT27T2isYdRPDF5HiLgmR1hCFXAtwXxLDkcJoIXeTxBm43wwF6h/gATgKbEabB/bpOa5Y/uUGbmBvQWnTWAh4FRqORCFwCc+YC0Kk9ekoGlsY50Z",
@@ -178,22 +217,22 @@ If updated successfully:
 { "result": true }
 ```
 
-If serverID doesn't exist:
+If providerID doesn't exist:
 ```
 {
 	"error": {
 		"code" : "NOT_REGISTERED",
-		"message" : "serverID not found"
+		"message" : "providerID not found"
 	}
 }
 ```
 
-If public key does not match serverID:
+If public key does not match providerID:
 ```
 {
 	"error": {
 		"code" : "NOT_REGISTERED",
-		"message" : "Public key does not match key registered with this serverID"
+		"message" : "Public key does not match key registered with this providerID"
 	}
 }
 ```
