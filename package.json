@@ -1,0 +1,11 @@
+{
+  "name": "open-meetup-registry",
+  "version": "1.0.0",
+  "description": "Open Meetup Registry - for various meetup providers",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT"
+}
