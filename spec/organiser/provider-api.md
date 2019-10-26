@@ -108,17 +108,6 @@ Update the provider key
 
 The request is validated with the `publicKey` and the `signature` in the surrounding request object. The `newPublicKey` is then set as the key associated with this `providerID`
 
-**Sample request**
-```
-{
-	"providerID": "Wgx98Rbi8nQuL9ddn3mTk1",
-	"niceName": "Friendly Meetups",
-	"publicURL": "https://friendlymeetups.com",
-	"publicKey": "AAAAB3NzaC1yc2EAAAADAQABAAABAQCZqlC6FR3N2owDm0XEppLkSEQW2raVhoIOnFtDmiql+guZFoDZjHb77vpGKSQFhbGzqMlb1i0G90b6dHUKPVd+VU9aLKabHW0l2LnDuCfryrgpBq2b7cT73EVGU2AbBuDsGvXolTi61GRrb5/hU98+euYAre5dVAP5fa+IV55dvJ65FMjWFqL5sf1ZnHujil+Fh7g+j3G6nlj+QyGcLeCddJJFNsmszLK5EqzVPT27T2isYdRPDF5HiLgmR1hCFXAtwXxLDkcJoIXeTxBm43wwF6h/gATgKbEabB/bpOa5Y/uUGbmBvQWnTWAh4FRqORCFwCc+YC0Kk9ekoGlsY50Z",
-	"newPublicKey": "AAAAB3NzaC1yc2EAAAADAQABAAABAQDhy6GLs0tlrIbnA/a+btrBWNusO5nMbSefTjP+KcN5cUydrSMQ8nI1r0vHZOFTaDUD9HZnlgD3Y98pB+K3oiu84u4OIe8cmsZA3jUTTR6ZSyqay+3KcO3vq6M9jP/VLCSCuXmYG928DIsu2cLagz9dDAYDxP3N0QkrZbPvk3lT4f2IqOpxHvM/Wqgu02jpWudaD4PhxBqrxlHyVU3rt+q00UaPSjhOjZFsPzgzwWmdhPCDSbI5vKv7+GHdaIj17BMY37pVNdbhq8Mah2mq9kGKA8/CQzkils84Icg692xhphTjoFP9frskssDeZWaV/ftPGIUL1ckosfW1//CbS5dT"
-}
-```
-
 **Sample response**
 
 If updated successfully:

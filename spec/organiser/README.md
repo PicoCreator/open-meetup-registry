@@ -59,32 +59,6 @@ Example library: https://www.npmjs.com/package/json-stable-stringify
 }
 ```
 
-### Group Request Object Details
-
-| Parameter Name | Type           | Description                                                    | Length limits   |
-|----------------|----------------|----------------------------------------------------------------|-----------------|
-| groupID        | String (UTF-8) | Base 58 - GUID string to identify the group                    | 32 bytes        |
-| providerID     | String (UTF-8) | Base 58 - GUID string to identify the provider                 | 32 bytes        |
-| name           | String (UTF-8) | Nice group name                                                | 100 bytes       |
-| publicURL      | String (UTF-8) | URL of the public server                                       | 2048 bytes      |
-| publicKey      | String (UTF-8) | Public key used to identify the server, Base64 encoded         | 1024 bytes      |
-| countryCode    | String (UTF-8) | ISO 3166-2 country code format (XX-YYZ)                        | 6 bytes         |
-
-### Event Request Object Details
-
-| Parameter Name   | Required | Type           | Description                                                | Length Limits |
-|------------------|----------|----------------|------------------------------------------------------------|---------------|
-| eventID          | yes      | String (UTF-8) | Base 58 - GUID string to identify the event                | 32 bytes      |
-| groupID          | yes      | String (UTF-8) | Base 58 - GUID string to identify the group                | 32 bytes      |
-| title            | yes      | String (UTF-8) | Event title                                                | 40 bytes      |
-| shortDescription | yes      | String (UTF-8) | Short event description                                    | 140 bytes     |
-| startTime        | yes      | String (UTF-8) | Event start time (ISO 8601 Extended Format with Timezone)  | 30 bytes      |
-| endTime          | yes      | String (UTF-8) | Event ending time (ISO 8601 Extended Format with Timezone) | 30 bytes      |
-| publicURL        | yes      | String (UTF-8) | Full link to the event details (including RSVP)            | 2048 bytes    |
-| countryCode      | yes      | String (UTF-8) | ISO 3166-2 country code format (XX-YYZ)                    | 6 bytes       |
-| address          | yes      | String (UTF-8) | Address for event                                          | 140 bytes     |
-| thumbnail        | optional | String (UTF-8) | URL for the thumbnail image                                | 2048 bytes    |
-
 ### Change Public Key Update Details
 
 | Parameter Name | Type           | Description                                                    | Length limits   |
