@@ -33,11 +33,13 @@ All API calls for create (POST) or edit (PUT/POST) , are required to.
 
 All providers, groups, and events objects - go through the following registration status
 
-- NOT_REGISTERED
-- PENDING_APPROVAL
-- PROVISIONAL
-- REGISTERED
-- BLOCKED
+| Object Status    | Description                                                                                   |
+|------------------|-----------------------------------------------------------------------------------------------|
+| NOT_REGISTERED   | Reserved keyword                                                                              |
+| PENDING_APPROVAL | Reserved keyword - used to indicate it is registered, and pending an approval process         |
+| PROVISIONAL      | Reserved keyword - used to indicate it is registered, and may or may not be visible to public |
+| REGISTERED       | Indicate that the object is registered and visible to public                                  |
+| BLOCKED          | Indicate that the object is blocked                                                           |
 
 It is not required for the registry to implement all status code
 
@@ -74,17 +76,28 @@ Add or registry an organiser provider.
 
 **Sample response**
 
-
+If registered succesfully.
 
 ```
 { "result": true }
 ```
 
-### /organiser/provider/:serverID/update
+If a collision error occur
 
-### /organiser/provider/:serverID/changeKey
+```
+{ 
+	"error": {
+		"code" : "DUPLICATE_ID",
+		"message" : "Existing serverID found"
+	} 
+}
+```
 
-## /organiser/group/:groupID/set
+### /provider/:serverID/update
+
+### /provider/:serverID/changeKey
+
+## /group/:groupID/set
 
 ## /organiser/group/:groupID/get
 
