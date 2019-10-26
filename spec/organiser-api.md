@@ -25,7 +25,8 @@ All API calls for create (POST) or edit (PUT/POST) , are required to.
 		...
 	},
 	"publickey" : "...",
-	"hmac" : "..."
+	"timestamp" : 987654
+	"signature" : "..."
 }
 ```
 
