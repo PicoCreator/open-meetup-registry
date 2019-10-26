@@ -59,22 +59,13 @@ Example library: https://www.npmjs.com/package/json-stable-stringify
 }
 ```
 
-### Provider Request Object Details
-
-| Parameter Name | Type           | Description                                                    | Length limits   |
-|----------------|----------------|----------------------------------------------------------------|-----------------|
-| providerID     | String (UTF-8) | Base 58 - GUID string to identify the provider                 | 32 bytes        |
-| niceName       | String (UTF-8) | Nice server name string (for administrative purposes)          | 100 bytes       |
-| publicURL      | String (UTF-8) | URL of the public server                                       | 2048 bytes      |
-| publicKey      | String (UTF-8) | Public key used to identify the server, Base64 encoded         | 1024 bytes      |
-
 ### Group Request Object Details
 
 | Parameter Name | Type           | Description                                                    | Length limits   |
 |----------------|----------------|----------------------------------------------------------------|-----------------|
 | groupID        | String (UTF-8) | Base 58 - GUID string to identify the group                    | 32 bytes        |
 | providerID     | String (UTF-8) | Base 58 - GUID string to identify the provider                 | 32 bytes        |
-| niceName       | String (UTF-8) | Nice server name string (for administrative purposes)          | 100 bytes       |
+| name           | String (UTF-8) | Nice group name                                                | 100 bytes       |
 | publicURL      | String (UTF-8) | URL of the public server                                       | 2048 bytes      |
 | publicKey      | String (UTF-8) | Public key used to identify the server, Base64 encoded         | 1024 bytes      |
 | countryCode    | String (UTF-8) | ISO 3166-2 country code format (XX-YYZ)                        | 6 bytes         |
