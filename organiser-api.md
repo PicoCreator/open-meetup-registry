@@ -18,13 +18,23 @@ Returns the current API version. This
 { "api-version" : "1.0.0" }
 ```
 
-## Server API
+## Provider API
 
-### /organiser/server/:serverID/set
+### /organiser/provider/:serverID/set
 
-### /organiser/server/:serverID/get
+Add or registry an organiser provider.
 
-### /organiser/server/:serverID/changeKey
+**type:** POST request
+
+**Parameters:**
++ ProviderID 
++ PublicURL 
+
+**Sample response**
+
+### /organiser/provider/:serverID/get
+
+### /organiser/provider/:serverID/changeKey
 
 ## /organiser/group/:groupID/set
 
