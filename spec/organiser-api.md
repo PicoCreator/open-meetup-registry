@@ -35,7 +35,8 @@ Example library: https://www.npmjs.com/package/json-stable-stringify
 		...
 	},
 	"publickey" : "...",
-	"hmac" : "..."
+	"timestamp" : 987654....
+	"signature" : "..."
 }
 ```
 
