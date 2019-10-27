@@ -79,9 +79,40 @@ async function providerApiSetup(app) {
 			return;
 		}
 	});
-	app.put("/v1/organiser/provider/:providerID/create", createProviderHandler );
+	app.put( "/v1/organiser/provider/:providerID/create", createProviderHandler );
 	app.post("/v1/organiser/provider/:providerID/create", createProviderHandler );
 
+
+	/**
+	 * Update the provider information
+	 */
+	const updateProviderHandler = expressAsyncUnwrapper( async function(req,res,next) {
+		// Get the request parameter
+		// and normalize it
+		let updateObj = normalizeProviderObj(
+			unwrapSignedRequest_noValidation(req),
+			req.params.providerID
+		);
+
+		// Lets get the providerobj
+		let existingObj = await providerCollection.findOne({ _id:req.params.providerID });
+
+		// Lets return missing ID
+		if( existingObj == null ) {
+			setupErrorResponse(res, "NOT_REGISTERED", "No object found with the GUID");
+			return;
+		}
+
+		// Lets join the two
+		updateObj = Object.assign({}, existingObj, updateObj);
+
+		// Lets perform the update
+		await providerCollection.updateOne({ _id:req.params.providerID }, { $set:updateObj });
+		respondWithJSON(res, { result: true });
+		return;
+	});
+	app.put( "/v1/organiser/provider/:providerID/update", updateProviderHandler );
+	app.post("/v1/organiser/provider/:providerID/update", updateProviderHandler );
 
 	//
 	// Return app
