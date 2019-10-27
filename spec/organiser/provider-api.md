@@ -7,7 +7,7 @@ Management of providers API, under the main [organiser API](./README.md)
 | Parameter Name | Type           | Description                                                    | Length limits   |
 |----------------|----------------|----------------------------------------------------------------|-----------------|
 | providerID     | String (UTF-8) | Base 58 - GUID string to identify the provider                 | 32 bytes        |
-| niceName       | String (UTF-8) | Nice server name string (for administrative purposes)          | 100 bytes       |
+| name           | String (UTF-8) | Nice server name string (for administrative purposes)          | 100 bytes       |
 | publicURL      | String (UTF-8) | URL of the public server                                       | 2048 bytes      |
 | publicKey      | String (UTF-8) | Public key used to identify the server, Base64 encoded         | 1024 bytes      |
 
