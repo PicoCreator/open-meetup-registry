@@ -1,5 +1,5 @@
 // Base58 charset tester
-const base58_regexTest = "^[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{22}$";
+const base58_regexTest = new RegExp("^[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{22}$");
 
 /**
  * Validates that the given GUID input - has enough "randomness"

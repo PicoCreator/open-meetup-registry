@@ -102,7 +102,6 @@ It is not required for the registry to implement all status code.
 
 ---
 
-
 ## General Purpose API
 
 ### /api-version

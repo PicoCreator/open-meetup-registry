@@ -11,6 +11,7 @@
  */
 module.exports = function normalizeLength(input, paramName = "parameter", minSize = 5, maxSize = 2048, trailString = null) {
 	// Get input length
+	input = (input || "");
 	const length = input.length;
 
 	// Length safety check

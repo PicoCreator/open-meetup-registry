@@ -7,6 +7,10 @@ const port = 3000;
 // Lets setup everything
 //
 (async function() {
+	// Setup the JSON / URL Encoder handling
+	app.use(express.json()) // for parsing application/json
+	app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
+
 	// Wait for monogodb to load
 	await require("./db/mongodb");
 

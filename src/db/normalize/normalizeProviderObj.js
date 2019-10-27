@@ -8,7 +8,7 @@ const normalizeLength = require("./normalizeLength");
  * @param {Object} input object for provider to filter
  * @param {String} oid for the object to use
  */
-function providerObjectFilter( input, oid = null ) {
+module.exports = function providerObjectFilter( input, oid = null ) {
 	let out = {};
 
 	out._id  = normalizeGUID( oid || input.providerID || input._id );
