@@ -11,12 +11,12 @@ const base58_regexTest = "^[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrst
 module.exports = function normalizeGUID(input) {
 	// Length safety check
 	if( input == null || input.length != 22 ) {
-		throw "Invalid base 58 GUID string format : "+input;
+		throw "Invalid base 58 GUID string format (invalid length) : "+input;
 	}
 
 	// Lets test for base58 strictly
 	if( !base58_regexTest.test(input) ) {
-		throw "Invalid base 58 GUID string format : "+input;
+		throw "Invalid base 58 GUID string format (invalid charset) : "+input;
 	}
 
 	// Return the input

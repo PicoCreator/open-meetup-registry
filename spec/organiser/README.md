@@ -41,21 +41,34 @@ All API calls for create (POST) or edit (PUT/POST) , are required to.
 
 ### Signing procedure:
 
-To ensure requests are not modified in transit, it is needed to calculate a HMAC on the request.
+To ensure requests are authenticated, and not modified in transit, it is needed to calculate a HMAC on the request.
+
+> Note for the initial setup of providers, providerID/Signature can be null
 
 1. Sort all fields in the request object recursively by lexicographical order of the keys and serialize as a String (UTF-8).
 Example library: https://www.npmjs.com/package/json-stable-stringify 
 2. Use request string above and public key as inputs to HMAC. The output should be encoded as a Base64 string.
-3. Put raw request, public key and hmac output (signature) into the final request object as specified below. 
+3. Put raw request, the provider/groupID and hmac output (signature) into the final request object as specified below. 
 
-**Request Format**
+**Request Format (Authenticate by provider)**
 ```
 {
 	"request" : {
 		...
 	},
-	"publickey" : "...",
-	"signature" : "..."
+	"providerID": "...",
+	"providerSignature" : "..."
+}
+```
+
+**Request Format (Authenticate by group)**
+```
+{
+	"request" : {
+		...
+	},
+	"groupID": "...",
+	"groupSignature" : "..."
 }
 ```
 
