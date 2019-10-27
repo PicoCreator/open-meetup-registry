@@ -9,6 +9,7 @@ const providerCollectionPromise = require("../../db/collection/providerCollectio
 const normalizeProviderObj = require("../../db/normalize/normalizeProviderObj");
 const unwrapSignedRequest_noValidation = require("../util/unwrapSignedRequest_noValidation");
 const setupErrorResponse = require("../util/setupErrorResponse");
+const respondWithJSON = require("../util/respondWithJSON");
 
 //----------------------------------------------
 //
@@ -40,12 +41,13 @@ async function providerApiSetup(app) {
 
 		// Lets return missing ID
 		if( providerObj == null ) {
-			return setupErrorResponse(res, "NOT_REGISTERED", "No object found with the GUID");
+			setupErrorResponse(res, "NOT_REGISTERED", "No object found with the GUID");
+			return;
 		}
 
 		// Normalize and return the result
-		res.result = normalizeProviderObj(providerObj);
-		return res;
+		respondWithJSON(res, { result: normalizeProviderObj(providerObj) });
+		return;
 	});
 	app.get("/v1/organiser/provider/:providerID/get", getProviderHandler );
 
@@ -60,19 +62,21 @@ async function providerApiSetup(app) {
 			req.params.providerID
 		);
 		
-		// Lets put it in
+		// Lets put it in - and return valid
 		try {
 			await providerCollection.insertOne(providerObj);
-			res.result = true;
-			return res;
+			respondWithJSON(res, { result: true });
+			return;
 		} catch(e) {
 			// E11000 - duplicate key error
 			if( (e+"").indexOf("E11000") >= 0 ) {
-				return setupErrorResponse(res, "DUPLICATE_ID", "Duplicate providerID found");
+				setupErrorResponse(res, "DUPLICATE_ID", "Duplicate providerID found");
+				return;
 			}
 
 			// Unexpected error
-			return setupErrorResponse(res, "UNEXPECTED_ERROR", e);
+			setupErrorResponse(res, "UNEXPECTED_ERROR", e);
+			return;
 		}
 	});
 	app.put("/v1/organiser/provider/:providerID/create", createProviderHandler );
