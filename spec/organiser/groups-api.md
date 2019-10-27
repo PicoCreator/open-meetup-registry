@@ -48,7 +48,7 @@ Edit a group.
 
 **type:** PUT/POST request
 
-**Authenticate:** using group public key
+**Authenticate:** using provider/group public key
 
 **Request Object Parameters:** see `group Request Object Details`
 
