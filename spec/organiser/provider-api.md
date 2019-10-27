@@ -43,7 +43,7 @@ If providerID already exists in the registry:
 { 
 	"error": {
 		"code" : "DUPLICATE_ID",
-		"message" : "Existing providerID found"
+		"message" : "Duplicate providerID found"
 	} 
 }
 ```

@@ -98,6 +98,7 @@ It is not required for the registry to implement all status code.
 |------------------|-----------------------------------------------------------------------------------------------|
 | DUPLICATE_ID     | Duplicate ID found, please ensure your GUID is truely random                                  |
 | INVALID_KEY      | Invalid key used to modify object                                                             |
+| UNEXPECTED_ERROR | Unexpected error reponse                                                                      |
 
 ---
 

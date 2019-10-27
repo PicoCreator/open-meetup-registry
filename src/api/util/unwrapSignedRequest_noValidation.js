@@ -2,5 +2,9 @@
  * Unwraps a signed request, without validation
  */
 module.exports = function(req) {
-	return req.request;
+	let ret = req.request;
+	if( ret == null ) {
+		throw "Signing Validation - Missing .request object";
+	}
+	return ret;
 }
