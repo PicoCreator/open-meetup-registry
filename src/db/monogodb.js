@@ -19,9 +19,9 @@ if( dbConfig.connection == null || dbConfig.connection.length <= 0 ) {
 const dbClientInstance = new MongoClient(dbConfig.connection, { useNewUrlParser: true });
 
 // Client connector wrapped in a promise
-const dbClientConnectorPromise = (async function() {
+const dbClientConnectionPromise = (async function() {
 	return await dbClientInstance.connect();
 })();
 
 // Return the module exports
-module.exports = dbClientConnectorPromise;
+module.exports = dbClientConnectionPromise;
