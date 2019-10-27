@@ -49,7 +49,7 @@ async function providerApiSetup(app) {
 		respondWithJSON(res, { result: normalizeProviderObj(providerObj) });
 		return;
 	});
-	app.get("/v1/organiser/provider/:providerID/get", getProviderHandler );
+	app.get( "/v1/organiser/provider/:providerID/get", getProviderHandler );
 
 	/**
 	 * Provider create API
@@ -104,7 +104,7 @@ async function providerApiSetup(app) {
 		}
 
 		// Lets join the two
-		updateObj = Object.assign({}, existingObj, updateObj);
+		updateObj = normalizeProviderObj( Object.assign({}, existingObj, updateObj) );
 
 		// Lets perform the update
 		await providerCollection.updateOne({ _id:req.params.providerID }, { $set:updateObj });
