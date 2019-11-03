@@ -5,12 +5,12 @@
 //----------------------------------------------
 
 const expressAsyncUnwrapper = require("../util/expressAsyncUnwrapper");
-const normalizeProviderObj = require("../../db/normalize/normalizeProviderObj");
 const unwrapSignedRequest_noValidation = require("../util/unwrapSignedRequest_noValidation");
 const setupErrorResponse = require("../util/setupErrorResponse");
 const respondWithJSON = require("../util/respondWithJSON");
 
 const providerCollectionPromise = require("../../db/collection/providerCollection");
+const normalizeProviderObj = require("../../db/normalize/normalizeProviderObj");
 
 //----------------------------------------------
 //
