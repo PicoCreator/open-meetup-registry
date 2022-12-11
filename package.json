@@ -10,7 +10,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "iso-3166-2.json": "^0.1.2",
     "mongodb": "^3.3.3"
   }
